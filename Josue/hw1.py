@@ -3,7 +3,7 @@ This is my solutions for this
 http://comet.lehman.cuny.edu/schneider/Fall17/CMP464/LearnPython_NumPy.html
 Note: I am using python 2.7
 '''
-
+import time
 # 1: Sum the squares of the first 20 odd numbers.
 print sum([(x*2-1)**2 for x in range(1,21)])
 # or like http://www.geeksforgeeks.org/sum-of-squares-of-even-and-odd-natural-numbers/
@@ -30,3 +30,8 @@ print sortDict()
 # 3: You are given two vectors in an arbitrary N dimensional space.....
 # 3.1: The distance between two vectors is defined as....
 # 3.2: Use arrays and dot product to find the distance without using loops.
+
+
+then = time.time()
+# run function in here to get time
+timer = time.time() - then
