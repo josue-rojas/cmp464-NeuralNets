@@ -112,6 +112,22 @@ for _ in range(steps):
 for x, _ in training_data_or: #change to xor to see results of XOR
     result = dot(x, w) 
     print("{}: {} -> {}".format(x[:2], result, unit_step(result)))
+    
+ylim([-1,1]) 
+plt.plot(errors)
+plt.show()
+
+
+for _ in range(steps): 
+    x, expected = choice(training_data_xor) #change set to see XOR 
+    result = dot(w, x) 
+    error = expected - unit_step(result) 
+    errors.append(error) 
+    w += bias * error * x 
+    
+for x, _ in training_data_or: #change to xor to see results of XOR
+    result = dot(x, w) 
+    print("{}: {} -> {}".format(x[:2], result, unit_step(result)))
 
 #plot errors to see learning
 ylim([-1,1]) 
