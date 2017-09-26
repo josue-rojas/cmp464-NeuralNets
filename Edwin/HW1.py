@@ -93,7 +93,13 @@ training_data_xor = [
     (array([0,0,1]), 0), 
     (array([0,1,1]), 1), 
     (array([1,0,1]), 1), 
-    (array([1,1,1]), 0), ]  
+    (array([1,1,1]), 0), ] 
+
+training_data_and = [ 
+    (array([0,0,1]), 0), 
+    (array([0,1,1]), 0), 
+    (array([1,0,1]), 0), 
+    (array([1,1,1]), 1), ]  
 
 w = random.rand(3)
 print('\nStarting seed',w)
@@ -117,7 +123,6 @@ ylim([-1,1])
 plt.plot(errors)
 plt.show()
 
-
 for _ in range(steps): 
     x, expected = choice(training_data_xor) #change set to see XOR 
     result = dot(w, x) 
@@ -125,7 +130,23 @@ for _ in range(steps):
     errors.append(error) 
     w += bias * error * x 
     
-for x, _ in training_data_or: #change to xor to see results of XOR
+for x, _ in training_data_xor: #change to xor to see results of XOR
+    result = dot(x, w) 
+    print("{}: {} -> {}".format(x[:2], result, unit_step(result)))
+
+#plot errors to see learning
+ylim([-1,1]) 
+plt.plot(errors)
+plt.show()
+
+for _ in range(steps): 
+    x, expected = choice(training_data_and) #change set to see XOR 
+    result = dot(w, x) 
+    error = expected - unit_step(result) 
+    errors.append(error) 
+    w += bias * error * x 
+    
+for x, _ in training_data_and: #change to xor to see results of XOR
     result = dot(x, w) 
     print("{}: {} -> {}".format(x[:2], result, unit_step(result)))
 
