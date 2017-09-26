@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 from scipy import stats
 
 # constants
-costType = 'squared' #type of cost used 'absolute', 'squared', 'cubed'
+costType = 'absolute' #type of cost used 'absolute', 'squared', 'cubed'
 rng = np.random
 M= 4 # should be None or an int
 N= 3 # number of different points for regression; I am only allowing values of -1 and 1
@@ -45,7 +45,7 @@ def cost(w,b,cost=costType):
     elif cost=='absolute':
         return np.absolute(((np.dot(Xarray,w)+b)-V)).sum() # taking the absolute value and the sum of all
     elif cost=='cubed':
-        return (((np.dot(Xarray,w)+b)-V)**2).sum() # taking the vubed value and the sum of all
+        return (((np.dot(Xarray,w)+b)-V)**3).sum() # taking the vubed value and the sum of all
 #print ("cost = \n",cost(1,1))
 
 def costWrapper(Avar):# just a wrapper function for sciPy
