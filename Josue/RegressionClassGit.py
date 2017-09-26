@@ -19,17 +19,19 @@ import matplotlib.pyplot as plt
 from scipy import stats
 
 # constants
-costType = 'absolute' #type of cost used 'absolute', 'squared', 'cubed'
+costType = 'squared' #type of cost used 'absolute', 'squared', 'cubed'
 rng = np.random
-M= 2 # should be None or an int
-N=2 # number of different points for regression; I am only allowing values of -1 and 1
+M= 4 # should be None or an int
+N= 3 # number of different points for regression; I am only allowing values of -1 and 1
 Xarray=10*rng.randn(N) if not M else 10*rng.randn(N, M)
 print("Xvalues ",Xarray,"\nshape of Xarray ",Xarray.shape)
-Vlow=-10;Vhigh=10 #originally 0 and 2 to mimic perceptron
-V= rng.randint(size=N, low=Vlow, high=Vhigh)
+Vlow=-10
+Vhigh=10 #originally 0 and 2 to mimic perceptron
+V= rng.randint(size=(N,M), low=Vlow, high=Vhigh)
 V=2*V-1  #note that the constant 2 is broadcast through the array as it should in linear algebra
-
+Weight = rng.randint(size=(N), low=Vlow, high=Vhigh)
 print("values taken on by V",V, "\nshape of V \n",V.shape)
+
 
 # gets the slope and intercept?(i think) (SHOULD CHANGE TO CHECK FOR MULTIPLE REGRESSION)
 if not M and N==2 and Xarray[1]!= Xarray[0] :
@@ -39,11 +41,11 @@ if not M and N==2 and Xarray[1]!= Xarray[0] :
 
 def cost(w,b,cost=costType):
     if cost == 'squared':
-        return (((w*Xarray+b)-V)**2).sum() # taking square here and then take the sum
+        return (((np.dot(Xarray,w)+b)-V)**2).sum() # taking square here and then take the sum
     elif cost=='absolute':
-        return np.absolute(((w*Xarray+b)-V)).sum() # taking the absolute value and the sum of all
+        return np.absolute(((np.dot(Xarray,w)+b)-V)).sum() # taking the absolute value and the sum of all
     elif cost=='cubed':
-        return (((w*Xarray+b)-V)**2).sum() # taking the vubed value and the sum of all
+        return (((np.dot(Xarray,w)+b)-V)**2).sum() # taking the vubed value and the sum of all
 #print ("cost = \n",cost(1,1))
 
 def costWrapper(Avar):# just a wrapper function for sciPy
@@ -57,9 +59,9 @@ def cost1(a,b):# to test the plot
 #
 #print("usingwrapper ", costWrapper([1,1]))
 #find the minimum from sciPy ; sort of ridiculous for square as is normal regression you can solve analytically
-res = minimize(costWrapper,[.5,.5],method='Nelder-Mead')# this method doesnt use derivatives
+res =  minimize(costWrapper,[list(Weight)],method='Nelder-Mead')# this method doesnt use derivatives
+
 print("result is ",res)
-print(" the  results from our minimizer of values of w, b  are ",res.x[0],res.x[1])
 print("the minimum it reached is ",res.fun)
 if not M and N== 2 and Xarray[1]!= Xarray[0] :
     print("the actual answer which should give us 0 as a cost is \n ",wans,bans)
