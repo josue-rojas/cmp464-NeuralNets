@@ -56,7 +56,7 @@ def cost1(a,b):# to test the plot
 #
 #vcostWrapper= np.vectorize(costWrapper)  #did not work wanted to be able to work on array of pairs
 
-#
+# THIS IS WRONG THIS NEEDS A B! 
 #print("usingwrapper ", costWrapper([1,1]))
 #find the minimum from sciPy ; sort of ridiculous for square as is normal regression you can solve analytically
 res =  minimize(costWrapper,[list(Weight)],method='Nelder-Mead')# this method doesnt use derivatives
@@ -97,7 +97,6 @@ print("\nB array\n",B,"\n and shape of B \n",B.shape)
 # ZtempA= ZtempA.reshape(W.shape)
 # print("\n reshaped array of z values \n",ZtempA)
 #===============================================================================
-
 zs=np.array([cost(w,b)for w,b in zip(np.ravel(W),np.ravel(B))]) #note is iterator
 Z = zs.reshape(W.shape)
 print(" \n  the Z after applying function \n",Z,"\n and shape of Z \n",Z.shape)
