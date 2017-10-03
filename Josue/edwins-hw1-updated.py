@@ -56,6 +56,7 @@ def percAlgo(training_data, gateName=''):
         print("{}: {} -> {}".format(x[:2], result, unit_step(result)))
 
     ylim([-1,1])
+    plt.title(gateName)
     plt.plot(errors)
     plt.show()
 
