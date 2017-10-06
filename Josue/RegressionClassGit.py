@@ -40,7 +40,6 @@ if not M and N==2 and Xarray[1]!= Xarray[0] :
     slope, intercept, r_value, p_value, std_err = stats.linregress(Xarray,V)
 
 def cost(Avar, cost=costType):
-    print(Avar)
     b = Avar[-1]
     w= Avar[:-1]
     w = np.array(w).reshape(M,1)
@@ -81,10 +80,10 @@ incr=1
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 # !!!!!!!!!!!!!!!!! should change -.8 to 1 to really see more correct graph !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-wSort = np.sort(res.x[:-1])
-bSort = np.sort(res.x[:-1])
-w= np.arange(wSort[0]-2,wSort[0]+2,.05)  #change from 1 to -.8 to see arrays
-b= np.arange(bSort[0]-2,bSort[0]+2,.05)
+wSort = np.sort(res.x[:-1]).reshape(M,1)
+b = res.x[-1]
+w= np.arange(wSort[0]-2,wSort[-1]+2,.05)  #change from 1 to -.8 to see arrays
+b= np.arange(b-2,b+2,.05)
 
 #w= np.arange(-10,10,.05)  #change from 1 to -.8 to see arrays
 #b= np.arange(-10,10,.05)
@@ -101,9 +100,13 @@ print("\nB array\n",B,"\n and shape of B \n",B.shape)
 # ZtempA= ZtempA.reshape(W.shape)
 # print("\n reshaped array of z values \n",ZtempA)
 #===============================================================================
-# THIS IS AN ERROR THE INPUT THE RAVEL W SHOULD RETURN AN N,1 ARRAY
-print(np.ravel(B))
-zs=np.array([cost([w,b])for w,b in zip(np.ravel(W),np.ravel(B))]) #note is iterator
+# THIS IS AN ERROR THE INPUT THE RAVEL W SHOULD RETURN AN N,1 ARRAY .... to solve this
+# I seperated the creation of this list into w and b part
+# first make the w list with the right amounts of w
+wList = [[w for x in range(M)] for w in np.ravel(W)]
+# then add to the list the b
+allList = [w + [b] for w,b in zip(wList, np.ravel(B))]
+zs=np.array([cost(wandb) for wandb in allList]) #note is iterator
 Z = zs.reshape(W.shape)
 print(" \n  the Z after applying function \n",Z,"\n and shape of Z \n",Z.shape)
 
