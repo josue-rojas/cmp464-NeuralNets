@@ -58,9 +58,9 @@ def gateFunction(Y=Y,gateName='OR'):
     Output = np.dot(X,Wanswer) + banswer
     print ('Output for ', gateName, ': ',Output)
 
-gateFunction(Y=ORY)
-gateFunction(Y=ANDY)
-gateFunction(Y=XORY)
+gateFunction(Y=ORY, gateName='OR')
+gateFunction(Y=ANDY,gateName='AND')
+gateFunction(Y=XORY, gateName='XOR')
 
 
 #===============================================================================
