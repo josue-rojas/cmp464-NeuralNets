@@ -75,7 +75,7 @@ gateFunction(gateName='AND')
 
 # x with an extra bit should be [0,0,0] [0,0,1] [0,1,0] [1,0,0] [1,0,1] [1,1,0] [1,1,1] [0,1,1]
 X = np.array([0,0,0,0,0,1,0,1,0,1,0,0,1,0,1,1,1,0,1,1,1,0,1,1]).reshape(8,3)
-Y = np.array([0,1,1,1,1,1,0,1]).reshape(8,1) # xor y outputs (i think)
+Y = np.array([0,1,1,1,0,0,1,0]).reshape(8,1) # xor y outputs (i think) https://electronics.stackexchange.com/questions/93713/how-is-an-xor-with-more-than-2-inputs-supposed-to-work
 gateFunction(gateName='XOR')
 
 
