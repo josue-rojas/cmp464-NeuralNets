@@ -62,10 +62,9 @@ def gateFunction(gateName='OR'):
     Wanswer = np.array(res.x[:-1])
     banswer = res.x[-1]
     Output = np.dot(X,Wanswer) + banswer
-    print ('Output for ', gateName, ': ',Output)
+    print ('Output for ', gateName, ': ',Output, '\n')
 
 X = np.array([0,0,1,0,0,1,1,1]).reshape(4,2)
-Y = []
 
 Y = np.array([0,1,1,1]).reshape(4,1) # or y outputs
 gateFunction(gateName='OR')
@@ -74,8 +73,9 @@ Y = np.array([0,0,0,1]).reshape(4,1) # and y outputs
 gateFunction(gateName='AND')
 
 # x with an extra bit should be [0,0,0] [0,0,1] [0,1,0] [1,0,0] [1,0,1] [1,1,0] [1,1,1] [0,1,1]
-X = np.array([0,0,0,0,0,1,0,1,0,1,0,0,1,0,1,1,1,0,1,1,1,0,1,1]).reshape(8,3)
-Y = np.array([0,1,1,1,0,0,1,0]).reshape(8,1) # xor y outputs (i think) https://electronics.stackexchange.com/questions/93713/how-is-an-xor-with-more-than-2-inputs-supposed-to-work
+# X = np.array([0,0,0,0,0,1,0,1,0,1,0,0,1,0,1,1,1,0,1,1,1,0,1,1]).reshape(8,3)
+X = np.array([0,0,0,1,0,1,0,1,1,1,1,0]).reshape(4,3)
+Y = np.array([0,1,1,0]).reshape(4,1) # xor y outputs (i think) https://electronics.stackexchange.com/questions/93713/how-is-an-xor-with-more-than-2-inputs-supposed-to-work
 gateFunction(gateName='XOR')
 
 
