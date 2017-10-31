@@ -7,6 +7,7 @@ Created on Oct 3, 2017
 
 import numpy as np
 from scipy.optimize import minimize# this is so can use their minimize
+import math
 
 # X=np.array([0,0,1,0,0,1,1,1]).reshape(4,2) #moved it down (too many comments here)
 # ORY = np.array([0,1,1,1]).reshape(4,1)
