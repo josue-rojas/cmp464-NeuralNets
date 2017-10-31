@@ -48,8 +48,11 @@ def cost(guess):
     inner = X.shape[1]
     b = guess[-1]
     w = np.array(guess[:-1]).reshape(inner,1)
-    costArray= ((np.dot(X,w)+b)-Y)**2 # taking square here to eventually take sum of squares
-    return costArray.sum()
+    logisitic = 1 / (1 + np.exp(math.e ** (-1*((np.dot(X,w)+b)-Y))))
+    firstSum = ((1 - Y)  * np.log(1 - logisitic)).sum()
+    secondSum = (Y * np.log(logisitic)).sum()
+    costArray = -1 * firstSum + -1 * secondSum
+    return costArray
 
 
 def gateFunction(gateName='OR'):
@@ -61,7 +64,8 @@ def gateFunction(gateName='OR'):
     print ("the w0, w1, and bias b you get are \n", res.x[0],res.x[1],res.x[2])
     Wanswer = np.array(res.x[:-1])
     banswer = res.x[-1]
-    Output = np.dot(X,Wanswer) + banswer
+    # change output check to logistic of the regular output
+    Output = 1 / (1 - math.e ** (-(np.dot(X,Wanswer) + banswer))) > .5
     print ('Output for ', gateName, ': ',Output, '\n')
 
 X = np.array([0,0,1,0,0,1,1,1]).reshape(4,2)
