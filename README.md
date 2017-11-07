@@ -3,8 +3,10 @@
 
 The point of this repo is to succeed in truly understanding what we learn by our greatest resource which is each other (and our collection of information).
 
-#Links to view some stuff here
+# Links to view some stuff here
+
 https://josuerojasrojas.github.io/cmp464-NeuralNets/9-26-17.html
+
 https://josuerojasrojas.github.io/cmp464-NeuralNets/Convolutional%20neural%20Networks/CNN.html
 
 ### Rules
