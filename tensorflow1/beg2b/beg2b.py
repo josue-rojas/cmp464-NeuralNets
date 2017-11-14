@@ -8,7 +8,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL']='2' #to avoid warnings about compilation
 import numpy as np
 import tensorflow as tf
 log_dir=os.path.dirname(os.path.realpath(__file__))
-os.system('rm event*') #assuming names are like that?!?!?!1
+os.system('cd' + log_dir + '; rm event*') #assuming names are like that?!?!?!1
 arfInitial= np.arange(2,dtype=np.int32).reshape((2,1))## very tricky need to match data types with numpy and tensorflow
 print("this will be initial value of arf \n",arfInitial)
 arf= tf.Variable(arfInitial,name="arf")

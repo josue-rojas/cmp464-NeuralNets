@@ -7,7 +7,7 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2' #to avoid warnings about compilation
 import tensorflow as tf
 log_dir=os.path.dirname(os.path.realpath(__file__))
-os.system('rm event*') #assuming names are like that?!?!?!1
+os.system('cd' + log_dir + '; rm event*') #assuming names are like that?!?!?!1
 arf= tf.constant([3,3],name="arf")
 barf= tf.constant([[1,5],[3,6]],name="barf")
 print("shape of array \n",barf.shape,"\n")

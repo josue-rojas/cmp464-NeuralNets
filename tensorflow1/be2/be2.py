@@ -7,7 +7,7 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2' #to avoid warnings about compilation
 import tensorflow as tf
 log_dir=os.path.dirname(os.path.realpath(__file__))
-os.system('rm event*') #assuming names are like that?!?!?!1
+os.system('cd' + log_dir + '; rm event*') #assuming names are like that?!?!?!1
 three= tf.constant(3,name="three")
 five= tf.constant(5,name="five")
 a= tf.add(three,five)
