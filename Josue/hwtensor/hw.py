@@ -1,5 +1,5 @@
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL']='2' #to avoid warnings about compilation
+os.environ['TF_CPP_MIN_LOG_LEVEL']='2' 
 import tensorflow as tf
 log_dir=os.path.dirname(os.path.realpath(__file__))
 os.system('cd' + log_dir + '; rm event*')
@@ -12,9 +12,10 @@ third = tf.constant([x for x in range(8)],name="four-two", shape=[4,2])
 fourth = tf.constant([x for x in range(2)],name="two-one", shape=[2,1])
 #
 fM = tf.matmul(first, second)
-fMlogistic = 1 / (1 + np.exp(math.e ** (-1*((np.dot(X,w)+b)-Y))))
-sM = tf.matmul(fM, third)
-tM = tf.matmul(sM, fourth)
+fMlogistic = 1 / (1 + tf.exp(fM))
+sM = tf.matmul(fMlogistic, third)
+sMLogistic = 1 / (1 + tf.exp(sM))
+tM = tf.matmul(sMLogistic, fourth)
 
 
 # other way to do it one line
@@ -23,5 +24,5 @@ tM = tf.matmul(sM, fourth)
 with tf.Session() as sess:
     writer = tf.summary.FileWriter(log_dir,sess.graph)
     # answer = sess.run([matMul]) #other way graph
-    answer = sess.run([fM, sM, tM])
+    answer = sess.run([fM, fMlogistic, sM, sMLogistic, tM])
     print answer
