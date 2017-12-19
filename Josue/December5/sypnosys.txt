@@ -1,0 +1,4 @@
+Tuning
+To add another layer you need another set of weights and biases. The first layer must have shaped image_size**2x M so when we can do matmul with training data that is shaped batch_size*image_size**2 this would output shape batch_sizexM. then the other layer must shrink the size to match the output so we give it shape Mxnum_labels.
+
+to train it we first do matmul on the training_data and first weights and biases (layer 1). we take the max function which is the rectified linear function in tf it is tf.nn.relu then you take the logits like with one single layer. 

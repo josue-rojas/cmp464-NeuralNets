@@ -1,19 +1,13 @@
 
 '''Created on Jun 7, 2017
 
-@author: bob
 '''
 from __future__ import print_function
-
 import matplotlib.pyplot as plt
 import numpy as np
 import os
-import sys
-import tarfile
 from IPython.display import display, Image
 from scipy import ndimage
-from sklearn.linear_model import LogisticRegression
-from urllib.request import urlretrieve
 import pickle
 import tensorflow as tf
 
@@ -65,6 +59,7 @@ def accuracy(predictions, labels):
   return (100.0 * np.sum(np.argmax(predictions, 1) == np.argmax(labels, 1))# predictions will be one hot encoded too and seeing if agree where 1 is
           / predictions.shape[0])
 batch_size = 128# the N for the minibatches
+other_size = 1000
 
 graph = tf.Graph()
 with graph.as_default():
@@ -78,25 +73,33 @@ with graph.as_default():
   tf_test_dataset = tf.constant(test_dataset)
 
   # Variables.
-  weights = tf.Variable(
-    tf.truncated_normal([image_size * image_size, num_labels]))# remember image_size*image_size is the number of features
-  biases = tf.Variable(tf.zeros([num_labels]))
+  weights1 = tf.Variable(
+    tf.truncated_normal([image_size * image_size, other_size]))
+  biases1 = tf.Variable(tf.zeros([other_size]))
+  weights2 = tf.Variable(tf.truncated_normal([other_size, num_labels]))
+  biases2 = tf.Variable(tf.zeros([num_labels]))
 
   # Training computation.
-  logits = tf.matmul(tf_train_dataset, weights) + biases
+  y1 = tf.nn.relu(tf.matmul(tf_train_dataset, weights1) + biases1)
+  logits = tf.matmul(y1, weights2) + biases2
   loss = tf.reduce_mean(
-    tf.nn.softmax_cross_entropy_with_logits(labels=tf_train_labels, logits=logits))# note you dont put in log of the output as the documentation seems to imply
+        tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=tf_train_labels))
+
 
   # Optimizer.
   optimizer = tf.train.GradientDescentOptimizer(0.5).minimize(loss)
 
   # Predictions for the training, validation, and test data.
-  train_prediction = tf.nn.softmax(logits) # the softmax computes the probabilities from outputs by using sigmoid and normalizing
-  valid_prediction = tf.nn.softmax(
-    tf.matmul(tf_valid_dataset, weights) + biases)
-  test_prediction = tf.nn.softmax(tf.matmul(tf_test_dataset, weights) + biases)
+  train_prediction = tf.nn.softmax(logits=logits) # the softmax computes the probabilities from outputs by using sigmoid and normalizing
+  y1_valid = tf.nn.relu(tf.matmul(tf_valid_dataset, weights1) + biases1)
+  valid_logits = tf.matmul(y1_valid, weights2) + biases2
+  valid_prediction = tf.nn.softmax(logits=valid_logits)
 
-  num_steps = 3001
+  y1_test = tf.nn.relu(tf.matmul(tf_test_dataset, weights1) + biases1)
+  test_logits = tf.matmul(y1_test, weights2) + biases2
+  test_prediction = tf.nn.softmax(logits=test_logits)
+
+num_steps = 3001
 
 with tf.Session(graph=graph) as session:
   tf.global_variables_initializer().run()
